@@ -21,7 +21,7 @@ export class AuthService {
     const user = await this.usersService.findOneByEmail(email);
 
     if (user) {
-      throw new BadRequestException('User already exists');
+      throw new BadRequestException('El usuario ya existe');
     }
 
     await this.usersService.create({
@@ -39,7 +39,7 @@ export class AuthService {
   async login({ email, password }: LoginDto) {
     const user = await this.usersService.findByEmailWithPassword(email);
     if (!user) {
-      throw new UnauthorizedException('email is wrong');
+      throw new UnauthorizedException('El email no es valido');
     }
 
     const isPasswordValid = await bcryptjs.compare(password, user.password);
